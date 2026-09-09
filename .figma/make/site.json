@@ -1,0 +1,11 @@
+{
+  "title": "TeaTeeWebsite",
+  "description": "TeaTee was created by Sophia Joeng to help golfers of all levels to connect with the online golf community. I want to allow all golfers to understand complex concepts & terminology that can otherwise require coaching or extensive resources to learn.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

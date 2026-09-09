@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: transparent;
+  color: #f5f0e8;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 169, 110, 0.2);
+  border-radius: 2px;
+}
+
+.font-display {
+  font-family: 'Fraunces', Georgia, serif;
+}
+.font-mono {
+  font-family: 'DM Mono', monospace;
+}
+
+.email-input::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* ─── Glass system ─────────────────────────────────── */
+.glass-white {
+  background: rgba(245, 240, 232, 0.08);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(18, 16, 10, 0.82);
+  backdrop-filter: blur(24px) saturate(1.1);
+  -webkit-backdrop-filter: blur(24px) saturate(1.1);
+  border: 1px solid rgba(200, 169, 110, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(200, 169, 110, 0.05);
+}
+
+/* ─── Liquid glass (liquid-glass-js reference) ──────── */
+/*
+ * Three-layer implementation:
+ *  BG layer  — fixed-pos kemplake copy, blurred + SVG-displaced → lens refraction
+ *  Tint layer — 5% white fill
+ *  ::after    — surface rim-light radials + diagonal sheen (rim/corner boost)
+ *  ::before   — gradient border: bright top-left, dim bottom-right
+ *  Content    — z-index 4, above all glass layers
+ */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.55),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.60),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 8px 28px rgba(0, 0, 0, 0.14),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Gradient border — bright on top-left, dim on bottom-right */
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0) 0 0) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.88) 0%,
+      rgba(255, 255, 255, 0.28) 28%,
+      rgba(255, 255, 255, 0.04) 54%,
+      rgba(255, 255, 255, 0.40) 100%
+    ) border-box;
+}
+
+/* Surface sheen + corner boost radials */
+.liquid-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 65% 45% at 14% 7%,  rgba(255, 255, 255, 0.36) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 30% at 90% 5%,  rgba(255, 255, 255, 0.20) 0%, transparent 100%),
+    radial-gradient(ellipse 32% 24% at 92% 95%, rgba(255, 255, 255, 0.12) 0%, transparent 100%),
+    linear-gradient(155deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.02) 48%,
+      rgba(255, 255, 255, 0.07) 100%
+    );
+}
+
+/* ─── Animations ───────────────────────────────────── */
+@keyframes teaFillUp {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+.tea-fill-up {
+  animation: teaFillUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bobaFloat {
+  0%,
+  100% {
+    transform: translate(0, 0px) rotate(0deg);
+  }
+  25% {
+    transform: translate(3px, -10px) rotate(2deg);
+  }
+  50% {
+    transform: translate(-2px, -6px) rotate(-1deg);
+  }
+  75% {
+    transform: translate(4px, -14px) rotate(3deg);
+  }
+}
+
+@keyframes swirlSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes oolongFlow {
+  0% {
+    background-position: 50% -50%;
+  }
+  100% {
+    background-position: 50% 150%;
+  }
+}
+
+@keyframes ballArc {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(80px, -55px) scale(0.5);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(155px, -8px) scale(0.22);
+    opacity: 0.35;
+  }
+}
+.ball-flying {
+  animation: ballArc 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-slide-up {
+  animation: fadeSlideUp 0.5s ease forwards;
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
